@@ -1,15 +1,7 @@
 #!/bin/sh
 # 2019/04/29 by Hank
 # Linux CentOS 7.6 iptables rule
-# 使用方式：
-# 1. 載入所有允許清單 command : sh geoip.sh
-# 2. 刪除白名單國家   command : sh geoip.sh del cc TW
-# 3. 刪除白名單IP     command : sh geoip.sh del ip 192.168.1.2 or geoip.sh del ip 192.168.1.0/24
-# 4. 新增白名單國家   command : sh geoip.sh add cc US
-# 5. 新增白名單IP     command : sh geoip.sh add ip 192.168.1.2 or sh geoip.sh add ip 192.168.1.0/24
-# 6. sh geoip.sh -l   : 顯示當前 iptables geoip 設定
-# 7. sh geoip.sh -d   : 刪除所有 iptables geoip 設定
-# 8. sh geoip.sh -h   : 幫助
+# 使用方式： cat README
 ##################################################################################################
 
 # 允許ports列表
@@ -27,11 +19,6 @@ fi
 if ! iptables -t mangle -L PREROUTING -n | grep 172.17 >> /dev/null ; then
     iptables -t mangle -I PREROUTING -s 172.17.0.0/16 -j ACCEPT
 fi
-
-# 開啟 DROP log 紀錄
-#if ! iptables -t mangle -L PREROUTING -n | grep LOG >> /dev/null ; then
-#    iptables -t mangle -I PREROUTING -p tcp -m multiport --dport 80,443,8787,8989 -j LOG --log-ip-options --log-prefix "iptables DROP:"
-#fi
 
 ##############
 # 載入白名單 #
@@ -127,7 +114,7 @@ elif [ $# -eq 3 ] && [ $1 = "del" ] && [ $2 = "ip" ] ; then
 	        sed -i /"$3":$ports/d $path/white_ip
 	    fi
     else
-        echo Failed,$3 was existed!
+        echo Failed,$3 not found!
     fi
 
 # 刪除geoip所有設定
