@@ -28,6 +28,11 @@ if ! iptables -t mangle -L PREROUTING -n | grep 172.17 >> /dev/null ; then
     iptables -t mangle -I PREROUTING -s 172.17.0.0/16 -j ACCEPT
 fi
 
+# 開啟 DROP log 紀錄
+#if ! iptables -t mangle -L PREROUTING -n | grep LOG >> /dev/null ; then
+#    iptables -t mangle -I PREROUTING -p tcp -m multiport --dport 80,443,8787,8989 -j LOG --log-ip-options --log-prefix "iptables DROP:"
+#fi
+
 ##############
 # 載入白名單 #
 ##############
@@ -131,6 +136,21 @@ elif [ $# -eq 1 ] && [ $1 = "-l" ] ; then
 elif [ $# -eq 1 ] && [ $1 = "-h" ] ; then
     cat $path/README
 
+# iptables LOG 開關
+elif [ $# -eq 2 ] && [ $1 = "on" ] && [ $2 = "log" ] ; then
+    if ! iptables -t mangle -L PREROUTING -n | grep LOG >> /dev/null ; then
+        iptables -t mangle -I PREROUTING -p tcp -m multiport --dport $ports -j LOG --log-ip-options --log-prefix "iptables DROP:"
+	echo "Success!"
+    else
+	echo "Failed,Log was on!"
+    fi
+elif [ $# -eq 2 ] && [ $1 = "off" ] && [ $2 = "log" ] ; then
+    if iptables -t mangle -L PREROUTING -n | grep LOG >> /dev/null ; then
+        iptables -t mangle -D PREROUTING -p tcp -m multiport --dport $ports -j LOG --log-ip-options --log-prefix "iptables DROP:"
+	echo "Success!"
+    else
+	echo "Failed,Log was off!"
+    fi
 ############################
 
 else 
