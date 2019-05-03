@@ -1,9 +1,8 @@
 #!/bin/sh
 
-wget https://github.com/hank6/GeoLite2xtables/archive/master.zip
-unzip master.zip
+git clone https://github.com/hank6/GeoLite2xtables.git
 
-cd GeoLite2xtables-master
+cd GeoLite2xtables
 ./00_download_geolite2
 ./10_download_countryinfo
 
@@ -15,7 +14,7 @@ modprobe xt_geoip
 opt=$?
 
 cd ..
-rm -rf GeoLite2xtables-master master.zip
+rm -rf GeoLite2xtables
 
 if [ $opt -eq 0 ] ; then
     echo -e "\nUpdata success!"
