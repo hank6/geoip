@@ -61,10 +61,17 @@ if [ $# -eq 0 ] ; then
             iptables -t mangle -A PREROUTING -m geoip -p tcp -m multiport --dports $ports --src-cc $str -j ACCEPT
         fi
     done < $path/white_country
+
+    # iptables LOG auto run
+    if ! iptables -t mangle -L PREROUTING -n | grep LOG >> /dev/null ; then
+        iptables -t mangle -I PREROUTING -p tcp -m multiport --dport $ports -j LOG --log-ip-options --log-prefix "iptables DROP:"
+    fi
     
     # 將 DROP rule 加回
     iptables -t mangle -A PREROUTING -p tcp -m multiport --dport $ports -j DROP
     #iptables -t mangle -A PREROUTING -j DROP
+
+    echo "Success!"
 
 ##############
 # 新增白名單 #
