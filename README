@@ -29,3 +29,21 @@
 
 
 # 國家二位代碼 ISO 3166-1 查詢 ：https://zh.wikipedia.org/wiki/%E5%9C%8B%E5%AE%B6%E5%9C%B0%E5%8D%80%E4%BB%A3%E7%A2%BC
+
+目前設定的 whitelist_country
+CN # 中國
+HK # 香港
+TW # 台灣
+MO # 澳門
+AU # 澳大利雅
+BN # 汶萊
+KH # 柬埔寨
+FJ # 斐濟
+ID # 印尼
+JP # 日本
+KR # 韓國
+MY # 馬來西亞
+PH # 菲律賓
+SG # 新加坡
+TH # 泰國
+VN # 越南
