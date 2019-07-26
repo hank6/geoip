@@ -25,7 +25,7 @@
  
  8. sh geoip.sh -l   : 顯示當前 iptables geoip 設定
 
- 9. sh geoip.sh -d   : 刪除所有 iptables geoip 設定
+ 9. sh geoip.sh -d   : 停用 geoip 並且刪除所有 iptables 設定
 
 
 # 國家二位代碼 ISO 3166-1 查詢 ：https://zh.wikipedia.org/wiki/%E5%9C%8B%E5%AE%B6%E5%9C%B0%E5%8D%80%E4%BB%A3%E7%A2%BC
